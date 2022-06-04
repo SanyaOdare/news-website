@@ -21,7 +21,7 @@ const SPORTS_NEWS = 'https://inshorts.deta.dev/news?category=sports';
 const TECH_NEWS = 'https://inshorts.deta.dev/news?category=technology';
 const POLITICS_NEWS = 'https://inshorts.deta.dev/news?category=politics';
 const ENTERTAINMENT_NEWS = 'https://inshorts.deta.dev/news?category=entertainment';
-const SEARCH_NEWS = 'https://inshorts.deta.dev/news?q=all';
+const SEARCH_NEWS = 'https://inshorts.deta.dev/news?q=category=all';
 
 
 window.onload = function() {
@@ -100,7 +100,7 @@ const fetchScienceNews = async () => {
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
-    newsDataArray = jsonResponse.category;
+    newsDataArray = jsonResponse.data;
   } else {
     // handle errors
     console.log(response.status, response.statusText);
