@@ -198,7 +198,7 @@ function displayNews() {
     newsHeading.innerHTML = news.title;
 
     let dateHeading = document.createElement('h6');
-    dateHeading.className = "text-primary";
+    dateHeading.className = "text-secondary fw-light";
     dateHeading.innerHTML = date;
 
     let newsContent = document.createElement('p');
