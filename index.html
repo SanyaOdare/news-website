@@ -19,7 +19,7 @@
     <!-- Navbar -->
     <div>
       <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
+        <div class="container container-fluid">
           <a class="navbar-brand text-warning" href="#">sure<span class="fw-bolder news text-white">news</span></a>
           <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link text-white" aria-current="page" href="#world" id="world">Home</a>
+                <a class="nav-link text-white" aria-current="page" href="#world-today" id="world-today">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-white" aria-current="page" href="#business" id="business">Business</a>
@@ -43,10 +43,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link text-white" href="#politics" id="politics">Politics</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#entertainment" id="entertainment">Entertainment</a>
-              </li>
+              </li>              
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="text" id="news-query" placeholder="Search news">
@@ -58,9 +55,11 @@
     </div>
 
     <!-- News -->
-    <div>
-      <div class="row" id="news-type"></div>
-      <div class="row me-2 ms-2" id="news-details"></div>
+    <div class="container">
+      <div class="row m-3" id="news-type"></div>
+      <div class="row me-2 ms-2" id="news-details">
+        <!-- Show News here -->
+      </div>
     </div>
 
     <!-- News Section -->
@@ -68,7 +67,7 @@
     
 
     <!-- Footer -->
-    <div>
+    <div class="mt-5">
       <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-4">
           <div class="container-fluid">

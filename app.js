@@ -1,10 +1,9 @@
-const worldButton = document.getElementById('world');
+const homeButton = document.getElementById('world-today');
 const businessButton = document.getElementById('business');
 const scienceButton = document.getElementById('science');
 const sportsButton = document.getElementById('sports');
 const techButton = document.getElementById('technology');
 const politicsButton = document.getElementById('politics');
-const entertainmentButton = document.getElementById('entertainment');
 const searchButton = document.getElementById('search-button');
 
 const newsQuery = document.getElementById('news-query');
@@ -12,29 +11,27 @@ const newsType = document.getElementById('news-type');
 const newsDetails = document.getElementById('news-details');
 
 // News Array
-var newsDataArray = [];
+let newsDataArray = [];
 
-//  News Categories 
-const HEADLINES_NEWS = 'https://inshorts.deta.dev/news?category=hatke';
-const WORLD_NEWS = 'https://inshorts.deta.dev/news?category=world';
+//  News Categories
+const TODAYS_NEWS = 'https://inshorts.deta.dev/news?category=world';
 const BUSINESS_NEWS = 'https://inshorts.deta.dev/news?category=business';
 const SCIENCE_NEWS = 'https://inshorts.deta.dev/news?category=science';
 const SPORTS_NEWS = 'https://inshorts.deta.dev/news?category=sports';
 const TECH_NEWS = 'https://inshorts.deta.dev/news?category=technology';
 const POLITICS_NEWS = 'https://inshorts.deta.dev/news?category=politics';
 const ENTERTAINMENT_NEWS = 'https://inshorts.deta.dev/news?category=entertainment';
-const SEARCH_NEWS = 'https://inshorts.deta.dev/news?q=';
+const SEARCH_NEWS = 'https://inshorts.deta.dev/news?q=all';
 
 
 window.onload = function() {
-  newsType.innerHTML = "<h4>Headlines</h4>";
-  fetchHeadlines();
+  newsType.innerHTML = "<h4>Today</h4>";
+  fetchTodaysNews();
 };
 
-
-worldButton.addEventListener("click", function() {
-  newsType.innerHTML = "<h4>World News</h4>";
-  fetchWorldNews();
+homeButton.addEventListener("click", function() {
+  newsType.innerHTML = "<h4>Today</h4>";
+  fetchTodaysNews();
 });
 
 businessButton.addEventListener("click", function() {
@@ -62,48 +59,23 @@ politicsButton.addEventListener("click", function() {
   fetchPoliticsNews();
 });
 
-entertainmentButton.addEventListener("click", function() {
-  newsType.innerHTML = "<h4>Entertainment</h4>";
-  fetchEntertainmentNews();
-});
-
 searchButton.addEventListener("click", function() {
-  newsType.innerHTML = `<h4>Search : ${newsQuery.value}</h4>`;
+  newsType.innerHTML = "<h4>Search : "+newsQuery.value+"</h4>";
   fetchNewsQuery();
 });
 
 
 // Fetch functions
-const fetchHeadlinesNews = async () => {
-  const response = await fetch(HEADLINES_NEWS);
-  console.log(response);
-  
+const fetchTodaysNews = async () => {
+  const response = await fetch(TODAYS_NEWS);
   newsDataArray = [];
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
-    console.log(jsonResponse);    
-    newsDataArray = jsonResponse.category;
+    console.log(jsonResponse);
+    newsDataArray = jsonResponse.data;
   } else {
     // handle errors
     console.log(response.status, response.statusText);
-    
-  }
-  displayNews();
-}
-
-const fetchWorldNews = async () => {
-  const response = await fetch(WORLD_NEWS);
-  console.log(response);
-  
-  newsDataArray = [];
-  if (response.status >= 200 && response.status < 300) {
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);    
-    newsDataArray = jsonResponse.category;
-  } else {
-    // handle errors
-    console.log(response.status, response.statusText);
-    
   }
   displayNews();
 }
@@ -114,7 +86,7 @@ const fetchBusinessNews = async () => {
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
-    newsDataArray = jsonResponse.category;
+    newsDataArray = jsonResponse.data;
   } else {
     // handle errors
     console.log(response.status, response.statusText);
@@ -142,7 +114,7 @@ const fetchSportsNews = async () => {
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
-    newsDataArray = jsonResponse.category;
+    newsDataArray = jsonResponse.data;
   } else {
     // handle errors
     console.log(response.status, response.statusText);
@@ -156,7 +128,7 @@ const fetchTechNews = async () => {
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
-    newsDataArray = jsonResponse.category;
+    newsDataArray = jsonResponse.data;
   } else {
     // handle errors
     console.log(response.status, response.statusText);
@@ -170,20 +142,7 @@ const fetchPoliticsNews = async () => {
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
-    newsDataArray = jsonResponse.category;
-  } else {
-    // handle errors
-    console.log(response.status, response.statusText);
-  }
-  displayNews();
-}
-
-const fetchEntertainmentNews = async () => {
-  const response = await fetch(ENTERTAINMENT_NEWS);
-  newsDataArray = [];
-  if (response.status >= 200 && response.status < 300) {
-    const jsonResponse = await response.json();
-    newsDataArray = jsonResponse.category;
+    newsDataArray = jsonResponse.data;
   } else {
     // handle errors
     console.log(response.status, response.statusText);
@@ -193,14 +152,14 @@ const fetchEntertainmentNews = async () => {
 
 const fetchNewsQuery = async () => {
 
-  if (newsQuery.value == null)
+  if (!newsQuery.value)
   return;
 
   const response = await fetch(SEARCH_NEWS+encodeURIComponent(newsQuery.value));
   newsDataArray = [];
   if (response.status >= 200 && response.status < 300) {
     const jsonResponse = await response.json();
-    newsDataArray = jsonResponse.category;
+    newsDataArray = jsonResponse.data;
   } else {
     //  handle errors
     console.log(response.status, response.statusText);
@@ -219,34 +178,34 @@ function displayNews() {
 
   newsDataArray.forEach(news => {
 
-    var date = news.publishedAt.split("T");
+    let date = news.date;
 
-    var newsColumn = document.createElement('div');
-    newsColumn.className = "col-sm-12 col-md-4 col-lg-3 p-2 card"
+    let newsColumn = document.createElement('div');
+    newsColumn.className = "col-sm-12 col-md-4 col-lg-3 p-2 card border-0"
 
-    var newsCard = document.createElement('div');
+    let newsCard = document.createElement('div');
     newsCard.className = "p-2";
 
-    var newsImage = document.createElement('img');
+    let newsImage = document.createElement('img');
     newsImage.setAttribute("height","matchparent");
     newsImage.setAttribute("width","100%");
     newsImage.src=news.imageUrl;
 
-    var newsCardBody = document.createElement('div');
+    let newsCardBody = document.createElement('div');
 
-    var newsHeading = document.createElement('h5');
+    let newsHeading = document.createElement('h5');
     newsHeading.className = "card-title";
     newsHeading.innerHTML = news.title;
 
-    var dateHeading = document.createElement('h6');
+    let dateHeading = document.createElement('h6');
     dateHeading.className = "text-primary";
-    dateHeading.innerHTML = date[0];
+    dateHeading.innerHTML = date;
 
-    var newsContent = document.createElement('p');
+    let newsContent = document.createElement('p');
     newsContent.className = "text-muted";
     newsContent.innerHTML = news.content;
 
-    var newsLink = document.createElement('a');
+    let newsLink = document.createElement('a');
     newsLink.className = "btn btn-dark";
     newsLink.setAttribute("target", "_blank");
     newsLink.href = news.url;
@@ -263,7 +222,5 @@ function displayNews() {
     newsColumn.appendChild(newsCard);
 
     newsDetails.appendChild(newsColumn);
-
   });
-
 }
