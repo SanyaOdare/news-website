@@ -6,6 +6,8 @@ const techButton = document.getElementById('technology');
 const politicsButton = document.getElementById('politics');
 const searchButton = document.getElementById('search-button');
 
+const loader = document.getElementById('loader');
+
 const newsQuery = document.getElementById('news-query');
 const newsType = document.getElementById('news-type');
 const newsDetails = document.getElementById('news-details');
@@ -25,7 +27,8 @@ const SEARCH_NEWS = 'https://inshorts.deta.dev/news?q=category=all';
 
 
 window.onload = function() {
-  newsType.innerHTML = "<h4>Today</h4>";
+  newsType.innerHTML += "<h4>Today</h4>";
+  displayLoader();
   fetchTodaysNews();
 };
 
@@ -36,6 +39,7 @@ homeButton.addEventListener("click", function() {
 
 businessButton.addEventListener("click", function() {
   newsType.innerHTML = "<h4>Business</h4>";
+  displayLoader();
   fetchBusinessNews();
 });
 
@@ -56,6 +60,7 @@ techButton.addEventListener("click", function() {
 });
 politicsButton.addEventListener("click", function() {
   newsType.innerHTML = "<h4>Politics</h4>";
+  displayLoader();
   fetchPoliticsNews();
 });
 
@@ -165,6 +170,22 @@ const fetchNewsQuery = async () => {
     console.log(response.status, response.statusText);
   }
   displayNews();
+}
+
+// Display Loader
+function displayLoader() {
+  loader.innerHTML += `
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  `
 }
 
 function displayNews() {
