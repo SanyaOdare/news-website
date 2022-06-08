@@ -26,6 +26,13 @@ span.news {
 a.nav-link {
   font-size: .9rem;
 }
+/* } Navbar */
+
+/* Card */
+p.text-muted {
+  font-size: .94rem;
+
+}
 
 /* Loader */
 .loader-container {

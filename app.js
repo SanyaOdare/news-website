@@ -50,11 +50,13 @@ scienceButton.addEventListener("click", function() {
 
 sportsButton.addEventListener("click", function() {
   newsType.innerHTML = "<h4>Sports</h4>";
+  displayLoader();
   fetchSportsNews();
 });
 
 techButton.addEventListener("click", function() {
   newsType.innerHTML = "<h4>Technology</h4>";
+  displayLoader();
   fetchTechNews();
 
 });
@@ -192,7 +194,7 @@ function displayNews() {
 
   newsDetails.innerHTML = "";
 
-  if (newsDataArray.length == 0) {
+  if (newsDataArray.length === 0) {
     newsDetails.innerHTML = "<h5>No data found.</h5>"
     return;
   }
@@ -208,6 +210,7 @@ function displayNews() {
     newsCard.className = "p-2";
 
     let newsImage = document.createElement('img');
+    newsImage.className = "img-fluid";
     newsImage.setAttribute("height","matchparent");
     newsImage.setAttribute("width","100%");
     newsImage.src=news.imageUrl;
@@ -215,7 +218,7 @@ function displayNews() {
     let newsCardBody = document.createElement('div');
 
     let newsHeading = document.createElement('h5');
-    newsHeading.className = "card-title";
+    newsHeading.className = "card-title mt-2";
     newsHeading.innerHTML = news.title;
 
     let dateHeading = document.createElement('h6');
